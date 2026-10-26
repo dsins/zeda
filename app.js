@@ -339,7 +339,7 @@
     let renderer;
     try {
       renderer = new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreference:'high-performance'});
-      renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+      renderer.setPixelRatio(Math.min(Math.max(devicePixelRatio || 1, 2), 2.5));
       renderer.setSize(innerWidth,innerHeight);
       renderer.setClearColor(0x000000,0);
       renderer.outputColorSpace=THREE.SRGBColorSpace;
@@ -354,6 +354,7 @@
     catch(e){renderer.dispose();$('#webgl').replaceChildren();return;}
     // Texture bytes pass through raw — the canvas displays the original sRGB values.
     // (No sRGB decode/re-encode: that path made the portrait render darker and orange.)
+    tex.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
     const uniforms={
       map:{value:tex}, time:{value:0}, alpha:{value:1}, pointer:{value:new THREE.Vector2()}, activity:{value:1},
       fxA:{value:fxA}, fxB:{value:fxB}, fxMix:{value:0}
