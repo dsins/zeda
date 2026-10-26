@@ -141,7 +141,7 @@
   }
 
   /* ---- portrait effect field: fifteen grades, one random on load, switchable ---- */
-  const FX_NAMES = ['RAW','GLITCH','PIXEL','SOLAR','GHOST','RGB','BLOOM','NOIR','SCAN','EDGE'];
+  const FX_NAMES = ['RAW','PIXEL','SOLAR','GHOST','RGB','BLOOM','NOIR','SCAN','EDGE'];
   const fxNav = $('#fx-switch');
   let fxA = 0, fxB = 0, FXU = null, fxTick = 0;
   FX_NAMES.forEach((name, i) => {
