@@ -25,40 +25,39 @@ body{margin:0;background:var(--ink);color:var(--chalk);font-family:'DM Sans',Hel
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(22px,4vw,56px)}
 header{display:flex;align-items:center;justify-content:space-between;padding:26px 0}
-.brand{display:inline-flex;align-items:center;gap:12px;font-family:'Manrope',sans-serif;font-weight:800;letter-spacing:-.08em;font-size:22px}
+.brand{display:inline-flex;align-items:center;gap:13px;font-family:'Manrope',sans-serif;font-weight:800;letter-spacing:-.09em;font-size:22px;line-height:1}
 .brand img{width:28px;height:28px}
 .brand .dot{opacity:.4}
 .head-right{display:flex;align-items:center;gap:26px;font-size:12px;letter-spacing:.16em;font-weight:600}
 .head-right a{opacity:.62;transition:opacity .2s}
 .head-right a:hover{opacity:1}
 .head-right .mail{border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:3px}
-.hero{position:relative;padding:9vh 0 7vh}
+.hero{padding:9vh 0 7vh}
 .hero .kick{font-size:11px;letter-spacing:.24em;color:var(--acc);font-weight:600;margin-bottom:22px}
 .hero h1{font-family:'Manrope',sans-serif;font-weight:800;letter-spacing:-.07em;line-height:.98;font-size:clamp(44px,6.4vw,96px);margin:0 0 26px;max-width:16ch}
-.hero p{max-width:62ch;font-size:clamp(15px,1.2vw,18px);color:rgba(227,228,224,.68);font-weight:300}
+.hero p{max-width:62ch;font-size:clamp(15px,1.2vw,18px);color:rgba(227,228,224,.8);font-weight:300}
 .svc-section{margin:14px 0 10px}
-.svc-sec-title{font-family:'Manrope',sans-serif;font-size:12px;font-weight:600;letter-spacing:.2em;color:rgba(228,229,224,.45);margin:38px 0 18px;text-transform:uppercase}
-.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));column-gap:56px;row-gap:0}
-.svc-card{position:relative;padding:38px 0;border-top:1px solid var(--line)}
-.svc-icon{color:var(--acc);margin-bottom:24px;display:grid;place-items:start;transition:transform .3s}
-.svc-icon svg{width:52px;height:52px}
+.svc-sec-title{font-family:'Manrope',sans-serif;font-size:12px;font-weight:600;letter-spacing:.2em;color:rgba(228,229,224,.62);margin:44px 0 6px;text-transform:uppercase}
+.svc-grid{display:grid;grid-template-columns:repeat(2,1fr);column-gap:72px}
+.svc-card{position:relative;padding:34px 0 6px;border-top:1px solid var(--line)}
+.svc-icon{color:var(--acc);margin-bottom:20px;display:grid;place-items:start;transition:transform .3s}
 .svc-card:hover .svc-icon{transform:translateY(-3px)}
 .svc-card h3{font-family:'Manrope',sans-serif;font-size:20px;font-weight:700;letter-spacing:-.02em;margin:0 0 10px}
-.svc-card p{margin:0;font-size:14px;color:rgba(227,228,224,.58);font-weight:300;max-width:34ch}
+.svc-card p{margin:0;font-size:14px;line-height:1.7;color:rgba(227,228,224,.78);font-weight:300;max-width:44ch}
 .close{margin:72px 0 40px;border-top:1px solid var(--line);padding-top:40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.close p{margin:0;font-size:14px;color:rgba(227,228,224,.55);max-width:52ch;font-weight:300}
+.close p{margin:0;font-size:14px;color:rgba(227,228,224,.78);max-width:52ch;font-weight:300}
 .cta{display:inline-flex;align-items:center;gap:14px;font-size:12px;font-weight:700;letter-spacing:.18em;border:1px solid rgba(235,233,227,.35);border-radius:100px;padding:14px 24px;transition:border-color .25s,background .25s}
 .cta:hover{border-color:var(--acc);background:rgba(211,149,131,.08)}
-footer{padding:0 0 50px;font-size:11px;letter-spacing:.18em;color:rgba(231,232,228,.4);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-@media(max-width:640px){.head-right{gap:16px}
+footer{padding:0 0 50px;font-size:11px;letter-spacing:.18em;color:rgba(231,232,228,.5);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media(max-width:760px){.svc-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.head-right{gap:16px}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <a class="brand" href="./">ZEDA<span class="dot">.</span></a>
+    <a class="brand" href="./"><img src="./zeda-logo-white.svg" alt="" width="28" height="28">ZEDA<span class="dot">.</span></a>
     <div class="head-right">
-      <a href="./">Back to Zeda</a>
       <a class="lang" href="./services-tr.html" hreflang="tr">TR</a>
       <a class="mail" href="mailto:hi@zeda.dev">hi@zeda.dev</a>
     </div>
@@ -73,67 +72,67 @@ footer{padding:0 0 50px;font-size:11px;letter-spacing:.18em;color:rgba(231,232,2
   <section class="svc-section">
     <h2 class="svc-sec-title">Neural & biomedical</h2>
     <div class="svc-grid"><article class="svc-card">
-      <div class="svc-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 12h5l2-3 3 5 2-2h6"/></svg></div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 12h5l2-3 3 5 2-2h6"/></svg></div>
       <h3>Medical image analysis</h3>
-      <p>Segmentation, detection and quantification on MRI, CT and pathology images.</p>
+      <p>Segmentation, detection and quantification across MRI, CT and pathology slides. Models tuned for small clinical datasets, from tumor delineation to organ volumetry.</p>
     </article><article class="svc-card">
-      <div class="svc-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h4l2-6 4 12 2-6h8"/></svg></div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h4l2-6 4 12 2-6h8"/></svg></div>
       <h3>Biosignal processing</h3>
-      <p>EEG, ECG and EMG: cleaning, feature extraction, event detection.</p>
+      <p>EEG, ECG and EMG pipelines: artifact removal, feature extraction and event detection, built for wearable and clinical recordings alike.</p>
     </article><article class="svc-card">
-      <div class="svc-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14A8 8 0 0 1 10 4a8 8 0 1 0 10 10z"/></svg></div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14A8 8 0 0 1 10 4a8 8 0 1 0 10 10z"/></svg></div>
       <h3>Sleep analysis</h3>
-      <p>Sleep staging, spindle and slow-wave detection, replay windows.</p>
+      <p>Automatic sleep staging, spindle and slow-wave detection, and the replay windows that matter for memory research.</p>
     </article><article class="svc-card">
-      <div class="svc-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a3 3 0 0 0-3 3 3 3 0 0 0-2 2.5A3 3 0 0 0 5 15a3 3 0 0 0 1 5.5c1.5.5 3-.5 3-2.5V9m3-5a3 3 0 0 1 3 3 3 3 0 0 1 2 2.5A3 3 0 0 1 19 15a3 3 0 0 1-1 5.5c-1.5.5-3-.5-3-2.5V9"/></svg></div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a3 3 0 0 0-3 3 3 3 0 0 0-2 2.5A3 3 0 0 0 5 15a3 3 0 0 0 1 5.5c1.5.5 3-.5 3-2.5V9m3-5a3 3 0 0 1 3 3 3 3 0 0 1 2 2.5A3 3 0 0 1 19 15a3 3 0 0 1-1 5.5c-1.5.5-3-.5-3-2.5V9"/></svg></div>
       <h3>Neuroimaging pipelines</h3>
-      <p>Preprocessing and quality control for fMRI, DWI and fUS.</p>
+      <p>Preprocessing, registration and quality control for fMRI, DWI and fUS, from raw DICOM to analysis-ready data.</p>
     </article></div>
   </section><section class="svc-section">
     <h2 class="svc-sec-title">Genomics & bioinformatics</h2>
     <div class="svc-grid"><article class="svc-card">
-      <div class="svc-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3c0 6-2 12-2 18M17 3c0 6 2 12 2 18M4 7h16M4 12h16M4 17h16"/></svg></div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3c0 6-2 12-2 18M17 3c0 6 2 12 2 18M4 7h16M4 12h16M4 17h16"/></svg></div>
       <h3>Genomic data pipelines</h3>
-      <p>Variant calling, annotation and interpretation.</p>
+      <p>Variant calling, annotation and clinical interpretation, delivered as reproducible, versioned workflows.</p>
     </article><article class="svc-card">
-      <div class="svc-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></div>
       <h3>Biomarker discovery</h3>
-      <p>Multi-omics integration to find the signals that matter.</p>
+      <p>Multi-omics integration and feature selection to surface the signals that actually predict an outcome.</p>
     </article><article class="svc-card">
-      <div class="svc-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="8" r="1.5"/><circle cx="12" cy="6" r="1.5"/><circle cx="9" cy="14" r="1.5"/><circle cx="16" cy="10" r="1.5"/><circle cx="14" cy="16" r="1.5"/></svg></div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="8" r="1.5"/><circle cx="12" cy="6" r="1.5"/><circle cx="9" cy="14" r="1.5"/><circle cx="16" cy="10" r="1.5"/><circle cx="14" cy="16" r="1.5"/></svg></div>
       <h3>Single-cell analysis</h3>
-      <p>scRNA-seq and spatial transcriptomics, from raw counts to cell states.</p>
+      <p>scRNA-seq and spatial transcriptomics, from raw counts to annotated cell states and trajectories.</p>
     </article><article class="svc-card">
-      <div class="svc-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
       <h3>Aging clocks</h3>
-      <p>Biological age models and longevity biomarkers.</p>
+      <p>Biological age models and longevity biomarkers, trained and validated on longitudinal cohorts.</p>
     </article></div>
   </section><section class="svc-section">
     <h2 class="svc-sec-title">AI & data infrastructure</h2>
     <div class="svc-grid"><article class="svc-card">
-      <div class="svc-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M8 7l3 8M16 7l-3 8M6 6h12"/></svg></div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M8 7l3 8M16 7l-3 8M6 6h12"/></svg></div>
       <h3>Custom ML models</h3>
-      <p>From predictive coding to spiking networks, trained for your data.</p>
+      <p>From predictive coding to spiking networks, models designed around your data and your constraints.</p>
     </article><article class="svc-card">
-      <div class="svc-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/></svg></div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/></svg></div>
       <h3>Representation alignment</h3>
-      <p>Shared latent spaces between signals, models and behavior.</p>
+      <p>Shared latent spaces between signals, models and behavior, so alignment is something you can measure.</p>
     </article><article class="svc-card">
-      <div class="svc-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="7" ry="3"/><path d="M5 5v14c0 1.7 3.1 3 7 3s7-1.3 7-3V5M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg></div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="7" ry="3"/><path d="M5 5v14c0 1.7 3.1 3 7 3s7-1.3 7-3V5M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg></div>
       <h3>Data engineering</h3>
-      <p>Pipelines, storage and compute at biotech scale.</p>
+      <p>Pipelines, storage and compute for biotech-scale data, built to stay reproducible from day one.</p>
     </article><article class="svc-card">
-      <div class="svc-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><circle cx="10" cy="14" r="2.5"/><path d="M12 16.5L15 19"/></svg></div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><circle cx="10" cy="14" r="2.5"/><path d="M12 16.5L15 19"/></svg></div>
       <h3>RAG & knowledge systems</h3>
-      <p>Retrieval systems that read and cite the literature.</p>
+      <p>Retrieval systems over the scientific literature that answer with citations, not guesses.</p>
     </article><article class="svc-card">
-      <div class="svc-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15a8 8 0 1 1 16 0"/><path d="M12 15l4-4"/><circle cx="12" cy="15" r="1"/></svg></div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15a8 8 0 1 1 16 0"/><path d="M12 15l4-4"/><circle cx="12" cy="15" r="1"/></svg></div>
       <h3>ML evaluation & ops</h3>
-      <p>Benchmarks, reproducibility and deployment for regulated settings.</p>
+      <p>Benchmarks, reproducibility audits and deployment for regulated, auditable environments.</p>
     </article><article class="svc-card">
-      <div class="svc-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 9l-2 5-4-1 2-5z"/></svg></div>
+      <div class="svc-icon"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 9l-2 5-4-1 2-5z"/></svg></div>
       <h3>AI strategy</h3>
-      <p>Where AI actually pays off in biotech, and where it does not.</p>
+      <p>Where AI actually pays off in biotech, and where it just burns budget. An honest map before you commit.</p>
     </article></div>
   </section>
 
