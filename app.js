@@ -17,10 +17,10 @@
     active: document.visibilityState !== 'hidden',
     lastWheel: 0, glReady: false
   };
-  const phaseNames = [
-    'THE FIRST DISTINCTION', 'MATTER ARRANGES ITSELF',
-    'COMPLEXITY FINDS A FORM', 'LIFE REMEMBERS', 'INTELLIGENCE CONVERGES'
-  ];
+  const LANG = document.documentElement.lang === 'tr' ? 'tr' : 'en';
+  const phaseNames = LANG === 'tr'
+    ? ['İLK AYRIM', 'MADDE DÜZENLENİR', 'KARMAŞIKLIK FORM BULUR', 'YAŞAM HATIRLAR', 'ZEKÂ YAKINSAR']
+    : ['THE FIRST DISTINCTION', 'MATTER ARRANGES ITSELF', 'COMPLEXITY FINDS A FORM', 'LIFE REMEMBERS', 'INTELLIGENCE CONVERGES'];
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const lerp = (a, b, t) => a + (b - a) * t;
   const pad = (n) => String(n).padStart(2, '0');
