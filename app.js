@@ -348,7 +348,7 @@
     const surface = new THREE.PlaneGeometry(1,1,64,96);
     const load = new THREE.TextureLoader();
     let tex;
-    try {tex=await load.loadAsync('./zeda-entity-v10.webp');}
+    try {tex=await load.loadAsync('./zeda-entity-v11.webp');}
     catch(e){renderer.dispose();$('#webgl').replaceChildren();return;}
     // Texture bytes pass through raw — the canvas displays the original sRGB values.
     // (No sRGB decode/re-encode: that path made the portrait render darker and orange.)
