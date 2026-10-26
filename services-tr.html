@@ -33,21 +33,18 @@ header{display:flex;align-items:center;justify-content:space-between;padding:26p
 .head-right a:hover{opacity:1}
 .head-right .mail{border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:3px}
 .hero{position:relative;padding:9vh 0 7vh}
-.hero::after{content:"";position:absolute;right:-12%;top:-24%;width:62vw;height:62vw;background:radial-gradient(circle,rgba(211,149,131,.09),transparent 60%);pointer-events:none}
 .hero .kick{font-size:11px;letter-spacing:.24em;color:var(--acc);font-weight:600;margin-bottom:22px}
 .hero h1{font-family:'Manrope',sans-serif;font-weight:800;letter-spacing:-.07em;line-height:.98;font-size:clamp(44px,6.4vw,96px);margin:0 0 26px;max-width:16ch}
 .hero p{max-width:62ch;font-size:clamp(15px,1.2vw,18px);color:rgba(227,228,224,.68);font-weight:300}
 .svc-section{margin:14px 0 10px}
 .svc-sec-title{font-family:'Manrope',sans-serif;font-size:12px;font-weight:600;letter-spacing:.2em;color:rgba(228,229,224,.45);margin:38px 0 18px;text-transform:uppercase}
-.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
-.svc-card{border:1px solid var(--line);border-radius:20px;padding:34px 28px 30px;transition:border-color .3s,transform .3s;position:relative;overflow:hidden}
-.svc-card::before{content:"";position:absolute;inset:0;background:radial-gradient(130% 95% at 18% 0%,rgba(211,149,131,.08),transparent 55%);pointer-events:none}
-.svc-card:hover{border-color:rgba(211,149,131,.4);transform:translateY(-3px)}
-.svc-icon{position:relative;color:var(--acc);margin-bottom:26px;display:grid;place-items:center;width:108px;height:108px;border-radius:50%;border:1px solid rgba(211,149,131,.22);background:radial-gradient(circle at 50% 32%,rgba(211,149,131,.17),transparent 72%);transition:transform .35s,border-color .35s}
-.svc-icon svg{width:46px;height:46px}
-.svc-card:hover .svc-icon{transform:scale(1.07);border-color:rgba(211,149,131,.5)}
-.svc-card h3{font-family:'Manrope',sans-serif;font-size:19px;font-weight:700;letter-spacing:-.02em;margin:0 0 12px}
-.svc-card p{margin:0;font-size:14px;color:rgba(227,228,224,.58);font-weight:300}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));column-gap:56px;row-gap:0}
+.svc-card{position:relative;padding:38px 0;border-top:1px solid var(--line)}
+.svc-icon{color:var(--acc);margin-bottom:24px;display:grid;place-items:start;transition:transform .3s}
+.svc-icon svg{width:52px;height:52px}
+.svc-card:hover .svc-icon{transform:translateY(-3px)}
+.svc-card h3{font-family:'Manrope',sans-serif;font-size:20px;font-weight:700;letter-spacing:-.02em;margin:0 0 10px}
+.svc-card p{margin:0;font-size:14px;color:rgba(227,228,224,.58);font-weight:300;max-width:34ch}
 .close{margin:72px 0 40px;border-top:1px solid var(--line);padding-top:40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .close p{margin:0;font-size:14px;color:rgba(227,228,224,.55);max-width:52ch;font-weight:300}
 .cta{display:inline-flex;align-items:center;gap:14px;font-size:12px;font-weight:700;letter-spacing:.18em;border:1px solid rgba(235,233,227,.35);border-radius:100px;padding:14px 24px;transition:border-color .25s,background .25s}
