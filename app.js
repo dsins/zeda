@@ -450,11 +450,26 @@
     }
     const dustGeometry=new THREE.BufferGeometry();
     dustGeometry.setAttribute('position',new THREE.BufferAttribute(current,3));
-    const dustMat=new THREE.PointsMaterial({color:0xe6e3df,size:1.3,sizeAttenuation:false,opacity:0,transparent:true,depthWrite:false});
+    const dCol=new Float32Array(COUNT*3);
+    for(let i=0;i<COUNT;i++){
+      const pick=fract(Math.sin(i*3.77)*9101.7)>.78;
+      dCol[3*i]=pick?.827:.902; dCol[3*i+1]=pick?.584:.890; dCol[3*i+2]=pick?.514:.874;
+    }
+    dustGeometry.setAttribute('color',new THREE.BufferAttribute(dCol,3));
+    const dustMat=new THREE.PointsMaterial({color:0xffffff,vertexColors:true,size:1.3,sizeAttenuation:false,opacity:0,transparent:true,depthWrite:false});
     const dust=new THREE.Points(dustGeometry,dustMat);
     scene.add(dust);
     const clock=new THREE.Clock();
     let smoothAlpha=state.index===0?1:0,smoothDust=0;
+    let seenIndex=state.index;
+    const scatterDust=(to)=>{
+      const arr=dustGeometry.attributes.position.array;
+      for(let i=0;i<COUNT;i++){
+        const th=Math.acos(1-2*fract(Math.sin(i*8.19)*5127.1)),ph=i*2.39996,rad=(.7+.55*fract(Math.sin(i*5.31)*7119.9));
+        for(let k=0;k<3;k++)arr[3*i+k]=to[3*i+k]+rad*(k===0?Math.sin(th)*Math.cos(ph):k===1?Math.cos(th):Math.sin(th)*Math.sin(ph));
+      }
+      dustGeometry.attributes.position.needsUpdate=true;
+    };
     const resize=()=>{
       const w=innerWidth,h=innerHeight;
       camera.left=-w/2;camera.right=w/2;camera.top=h/2;camera.bottom=-h/2;camera.updateProjectionMatrix();
@@ -487,14 +502,23 @@
       out.needsUpdate=true;
       particles.material.opacity=smoothAlpha*.33;
       particles.visible=smoothAlpha>.01;
+      if(state.index!==seenIndex){
+        if((state.index===1||state.index===2)&&seenIndex===0)scatterDust(targets[state.index===2?4:state.phase]);
+        seenIndex=state.index;
+      }
       const targetDust=state.index===1?1:state.index===2?.2:0;
-      smoothDust=lerp(smoothDust,targetDust,.045);
+      smoothDust=lerp(smoothDust,targetDust,.085);
       dustMat.opacity=smoothDust*.7;
       dust.visible=smoothDust>.008;
       if(dust.visible){
         const to=targets[state.index===2?4:state.phase];
         const arr=dustGeometry.attributes.position.array;
-        for(let i=0;i<arr.length;i++)arr[i]+=(to[i]-arr[i])*.03;
+        for(let i=0;i<COUNT;i++){
+        const wob=Math.sin(t*(.5+fract(i*.618)*.9)+i*2.7)*.011;
+        arr[3*i]+=(to[3*i]-arr[3*i])*.032+wob;
+        arr[3*i+1]+=(to[3*i+1]-arr[3*i+1])*.032+wob*.6;
+        arr[3*i+2]+=(to[3*i+2]-arr[3*i+2])*.032;
+      }
         dustGeometry.attributes.position.needsUpdate=true;
         const ss=Math.min(w*.26,h*.31);
         dust.scale.setScalar(ss);
