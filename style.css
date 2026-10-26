@@ -476,6 +476,6 @@ body.final-unlocked .face-portrait{opacity:0}
 }
 .final-answer span{letter-spacing:-.07em}
 /* The unstable half remains perceptibly alive even when the Three.js CDN is blocked. */
-.face-portrait::after{content:"";position:absolute;inset:0;background:url('./zeda-entity-v2.webp') center / 100% 100% no-repeat;clip-path:polygon(49% 0,100% 0,100% 100%,49% 100%);mix-blend-mode:screen;opacity:.13;filter:url(#neural-grade) contrast(1.15) blur(1px);animation:neural-shear 7.7s cubic-bezier(.51,.05,.44,.98) infinite alternate;pointer-events:none}
+.face-portrait::after{content:"";position:absolute;inset:0;background:url('./zeda-entity-v5.webp') center / 100% 100% no-repeat;clip-path:polygon(49% 0,100% 0,100% 100%,49% 100%);mix-blend-mode:screen;opacity:.13;filter:url(#neural-grade) contrast(1.15) blur(1px);animation:neural-shear 7.7s cubic-bezier(.51,.05,.44,.98) infinite alternate;pointer-events:none}
 @keyframes neural-shear{0%,100%{transform:translate(0,0) scale(1);opacity:.07}48%{transform:translate(3px,-2px) scale(1.006) skewY(.25deg);opacity:.18}72%{transform:translate(-2px,2px) scale(.997);opacity:.11}}
 @media(prefers-reduced-motion:reduce){.face-portrait::after{animation:none;opacity:0}}
