@@ -188,15 +188,13 @@
     if (fxCycleTimer) clearInterval(fxCycleTimer);
     fxCycleTimer = setInterval(() => {
       if (!state.active || document.body.dataset.scene !== '0') return;
-      let nxt = fxB;
-      while (nxt === fxB) nxt = Math.floor(Math.random() * FX_NAMES.length);
-      setFx(nxt);
+      setFx((fxB + 1) % FX_NAMES.length);
     }, 12000);
   }
   startFxCycle();
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') { if (fxCycleTimer) clearInterval(fxCycleTimer); fxCycleTimer = null; }
-    else startFxCycle();
+    else { if (fxTick % 2 || FXU && FXU.fxMix.value > 0) { fxTick++; fxA = fxB; if (FXU) { FXU.fxA.value = fxA; FXU.fxMix.value = 0; } paintFxUI(); } startFxCycle(); }
   });
 
   function goTo(index) {
@@ -403,8 +401,9 @@
           vec3 col=texture2D(map,uv).rgb;
           float micro=alive*.036*sin(uv.x*370.0+time*.7)*sin(uv.y*221.0-time*.28);
           col+=micro;
-          col=fxApply(int(fxA),uv,col);
-          col=mix(col,fxApply(int(fxB),uv,col),fxMix);
+          vec3 colA=fxApply(int(fxA),uv,col);
+          vec3 colB=fxApply(int(fxB),uv,col);
+          col=mix(colA,colB,fxMix);
           float edge=smoothstep(.005,.085,vUv.x)*smoothstep(.005,.075,1.0-vUv.x)*smoothstep(.01,.12,vUv.y)*smoothstep(.01,.1,1.0-vUv.y);
           float luminosity=max(col.r,max(col.g,col.b));
           float darkAlpha=smoothstep(.008,.075,luminosity);
