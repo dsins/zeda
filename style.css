@@ -479,3 +479,29 @@ body.final-unlocked .face-portrait{opacity:0}
 .face-portrait::after{content:"";position:absolute;inset:0;background:url('./zeda-entity-v11.webp') center / 100% 100% no-repeat;clip-path:polygon(49% 0,100% 0,100% 100%,49% 100%);mix-blend-mode:screen;opacity:.13;filter:url(#neural-grade) contrast(1.15) blur(1px);animation:neural-shear 7.7s cubic-bezier(.51,.05,.44,.98) infinite alternate;pointer-events:none}
 @keyframes neural-shear{0%,100%{transform:translate(0,0) scale(1);opacity:.07}48%{transform:translate(3px,-2px) scale(1.006) skewY(.25deg);opacity:.18}72%{transform:translate(-2px,2px) scale(.997);opacity:.11}}
 @media(prefers-reduced-motion:reduce){.face-portrait::after{animation:none;opacity:0}}
+
+/* Final: arka planda hafif vurgu toz bulutu */
+.final-dust{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 1.2s .25s}
+body.final-unlocked .final-dust{opacity:1}
+.final-dust::before,.final-dust::after{content:"";position:absolute;inset:-12%}
+.final-dust::before{
+  background:
+    radial-gradient(34vw 26vw at 78% 30%, rgba(174,104,88,.24), transparent 68%),
+    radial-gradient(26vw 20vw at 66% 58%, rgba(174,104,88,.17), transparent 70%),
+    radial-gradient(20vw 16vw at 88% 66%, rgba(174,104,88,.13), transparent 72%);
+  filter:blur(6px);
+  animation:dust-drift 46s ease-in-out infinite alternate;
+}
+.final-dust::after{
+  background-image:radial-gradient(rgba(174,104,88,.5) 1px, transparent 1.4px);
+  background-size:30px 26px;
+  -webkit-mask-image:radial-gradient(42vw 34vw at 76% 44%, #000 12%, transparent 66%);
+  mask-image:radial-gradient(42vw 34vw at 76% 44%, #000 12%, transparent 66%);
+  opacity:.32;
+  animation:dust-drift 38s ease-in-out infinite alternate-reverse;
+}
+@keyframes dust-drift{
+  from{transform:translate3d(-1.4%,1.1%,0) scale(1)}
+  to{transform:translate3d(1.6%,-1.3%,0) scale(1.05)}
+}
+@media (prefers-reduced-motion:reduce){.final-dust::before,.final-dust::after{animation:none}}
