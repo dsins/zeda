@@ -472,7 +472,7 @@
       const target=state.index===0?1:0;
       smoothAlpha=lerp(smoothAlpha,target,.045);
       uniforms.alpha.value=smoothAlpha;
-      const vh=Math.min(mobile?h*.74:h*.92, 1536);
+      const vh=mobile?h*.74:Math.min(h*.74, 1229);
       portrait.scale.set(vh*2/3,vh,1);
       portrait.position.set(mobile?w*.16:w*.292,mobile?h*.17:h*.005,0);
       portrait.rotation.z=state.pointerX*.0035;
