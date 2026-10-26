@@ -384,15 +384,14 @@
         float hash21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
         vec3 fxSamp(vec2 u){return texture2D(map,u).rgb;}
         vec3 fxApply(int i, vec2 u, vec3 c){
-          if(i==1){ float n=floor(u.y*64.); float off=(hash21(vec2(n,floor(time*12.)))-.5)*.06*step(.7,hash21(vec2(n,7.))); vec2 du=vec2(off,0.); vec3 g=fxSamp(u+du); float tear=step(.92,hash21(vec2(n,3.)))*.14; return vec3(g.r,fxSamp(u+du+vec2(tear,0.)).g,fxSamp(u+du-vec2(tear,0.)).b); }
-          if(i==2){ vec2 pu=floor(u*44.)/44.; return fxSamp(pu); }
-          if(i==3){ vec3 s=mix(c,1.-c,step(.5,c)); return s*1.25; }
-          if(i==4){ return clamp(c*.7+fxSamp(u-vec2(.013,0.))*.5,0.,1.); }
-          if(i==5){ vec2 o=vec2(.015,0.); return vec3(fxSamp(u+o).r,fxSamp(u).g,fxSamp(u-o).b); }
-          if(i==6){ vec3 b=c*.55; for(int k=0;k<4;k++){ float r=float(k+1)*.007; vec2 d=vec2(cos(float(k)*1.7+time*.5),sin(float(k)*2.3-time*.3))*r; b+=fxSamp(u+d)*.13; } return b; }
-          if(i==7){ float l=dot(c,vec3(.299,.587,.114)); l=smoothstep(.16,.82,l); return vec3(l*l); }
-          if(i==8){ float scan=sin(u.y*900.+time*7.)*.16; float roll=smoothstep(.5,1.,fract(time*.07))*.4; return c*(1.+scan)*(1.+roll); }
-          if(i==9){ vec2 e=vec2(.0035,0.); float gx=dot(fxSamp(u+e),vec3(.3,.6,.1))-dot(fxSamp(u-e),vec3(.3,.6,.1)); vec2 e2=vec2(0.,.0035); float gy=dot(fxSamp(u+e2),vec3(.3,.6,.1))-dot(fxSamp(u-e2),vec3(.3,.6,.1)); float m=clamp(length(vec2(gx,gy))*6.,0.,1.); return vec3(m*.9,m*.95,1.)*m; }
+          if(i==1){ vec2 pu=floor(u*44.)/44.; return fxSamp(pu); }
+          if(i==2){ vec3 s=mix(c,1.-c,step(.5,c)); return s*1.25; }
+          if(i==3){ return clamp(c*.7+fxSamp(u-vec2(.013,0.))*.5,0.,1.); }
+          if(i==4){ vec2 o=vec2(.015,0.); return vec3(fxSamp(u+o).r,fxSamp(u).g,fxSamp(u-o).b); }
+          if(i==5){ vec3 b=c*.55; for(int k=0;k<4;k++){ float r=float(k+1)*.007; vec2 d=vec2(cos(float(k)*1.7+time*.5),sin(float(k)*2.3-time*.3))*r; b+=fxSamp(u+d)*.13; } return b; }
+          if(i==6){ float l=dot(c,vec3(.299,.587,.114)); l=smoothstep(.16,.82,l); return vec3(l*l); }
+          if(i==7){ float scan=sin(u.y*900.+time*7.)*.16; float roll=smoothstep(.5,1.,fract(time*.07))*.4; return c*(1.+scan)*(1.+roll); }
+          if(i==8){ vec2 e=vec2(.0035,0.); float gx=dot(fxSamp(u+e),vec3(.3,.6,.1))-dot(fxSamp(u-e),vec3(.3,.6,.1)); vec2 e2=vec2(0.,.0035); float gy=dot(fxSamp(u+e2),vec3(.3,.6,.1))-dot(fxSamp(u-e2),vec3(.3,.6,.1)); float m=clamp(length(vec2(gx,gy))*6.,0.,1.); return vec3(m*.9,m*.95,1.)*m; }
           return c;
         }
         void main(){
