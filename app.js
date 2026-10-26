@@ -326,6 +326,62 @@
   }
   if (cx) requestAnimationFrame(paintFallback);
 
+  // FIELDS: rotating double helix with base-pair rungs and depth shading.
+  const helixCanvas = $('#helix-canvas');
+  if (helixCanvas) {
+    const hc = helixCanvas.getContext('2d');
+    let hw = 0, hh = 0;
+    function sizeHelix() {
+      const r = helixCanvas.parentElement.getBoundingClientRect();
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      hw = r.width; hh = r.height;
+      helixCanvas.width = Math.max(1, Math.round(hw * dpr));
+      helixCanvas.height = Math.max(1, Math.round(hh * dpr));
+      hc.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    sizeHelix();
+    window.addEventListener('resize', sizeHelix, {passive:true});
+    const N = 46, TURNS = Math.PI * 5.2;
+    function paintHelix(time) {
+      requestAnimationFrame(paintHelix);
+      if (state.index !== 4 || document.hidden || hw < 4) return;
+      const t = reduced ? 0 : time * .00042;
+      const cxp = hw / 2, amp = hw * .29;
+      hc.clearRect(0, 0, hw, hh);
+      const strands = [];
+      for (let i = 0; i < N; i++) {
+        const y = (i + .5) / N * hh;
+        const ph = i / N * TURNS + t;
+        const pair = [];
+        for (let s = 0; s < 2; s++) {
+          const a = ph + s * Math.PI;
+          const depth = (Math.cos(a) + 1) / 2;
+          pair.push({x: cxp + Math.sin(a) * amp, y, depth});
+        }
+        strands.push(pair);
+      }
+      // base pairs first, so near nodes sit on top
+      for (let i = 0; i < N; i += 3) {
+        const [a, b] = strands[i];
+        const d = (a.depth + b.depth) / 2;
+        hc.strokeStyle = `rgba(211,149,131,${.05 + d * .22})`;
+        hc.lineWidth = .8;
+        hc.beginPath(); hc.moveTo(a.x, a.y); hc.lineTo(b.x, b.y); hc.stroke();
+      }
+      for (let i = 0; i < N; i++) {
+        for (let s = 0; s < 2; s++) {
+          const p = strands[i][s];
+          const accent = (i + s * 2) % 5 === 0;
+          const alpha = .12 + p.depth * .68;
+          hc.fillStyle = accent ? `rgba(211,149,131,${alpha})` : `rgba(235,233,227,${alpha * .82})`;
+          const r = .9 + p.depth * 2.6;
+          hc.beginPath(); hc.arc(p.x, p.y, r, 0, 6.2832); hc.fill();
+        }
+      }
+    }
+    requestAnimationFrame(paintHelix);
+  }
+
   // THREE.JS: a living photographic entity, not a low-poly robot mask.
   // One anatomical side remains near-still; the other is reconstructed every frame.
   // The generated portrait is local, optimized and still visible if WebGL/CDN is absent.
