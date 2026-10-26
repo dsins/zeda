@@ -36,6 +36,9 @@ body:not([data-scene="0"]) #light-cut{opacity:0}
 .header-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:9px;font-weight:600;letter-spacing:.27em;color:rgba(225,226,224,.45);white-space:nowrap}
 .header-dot{display:inline-block;width:4px;height:4px;margin-right:13px;vertical-align:middle;border-radius:50%;background:#d39583;box-shadow:0 0 12px rgba(211,149,131,.45);animation:breathe 3.6s ease-in-out infinite}
 @keyframes breathe{50%{opacity:.13;box-shadow:none}}
+.nav-page{margin-right:30px;font-size:clamp(10px,.8vw,12px);font-weight:700;letter-spacing:.16em;color:rgba(225,226,224,.55);padding:10px 0;transition:color .2s}
+.nav-page:hover{color:#fff}
+body.final-unlocked .nav-page{color:rgba(8,8,8,.62)}
 .lang{margin-left:auto;margin-right:30px;font-size:clamp(10px,.8vw,12px);font-weight:700;letter-spacing:.16em;color:rgba(225,226,224,.55);padding:10px 0;transition:color .2s}
 .lang:hover{color:#fff}
 body.final-unlocked .lang{color:rgba(8,8,8,.62)}
@@ -250,6 +253,7 @@ body[data-fx="9"] .face-portrait img{filter:grayscale(1) contrast(1.9)}
   .header-center{display:none}
   .contact{font-size:11px}
   .lang{margin-right:14px}
+  .nav-page{margin-right:14px}
   .contact span{margin-left:9px}
   .scene{padding:90px var(--edge) 98px}
   .scene-body{justify-content:center}
