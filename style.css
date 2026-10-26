@@ -382,7 +382,7 @@ body[data-fx="9"] .face-portrait img{filter:grayscale(1) contrast(1.9)}
 }
 
 /* v2.2 — organic cinematic portrait. The still is also our deliberate no-WebGL fallback. */
-.face-portrait{position:fixed;z-index:1;left:79.2%;top:49.5%;height:min(74vh,1229px);aspect-ratio:2/3;transform:translate3d(-50%,-50%,0);pointer-events:none;opacity:1;mix-blend-mode:lighten;transition:opacity .65s ease,transform 1.2s var(--ease);-webkit-mask-image:linear-gradient(to bottom,transparent .5%,#000 10%,#000 88%,transparent 99%),linear-gradient(to right,transparent .5%,#000 8.5%,#000 92.5%,transparent 99.5%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent .5%,#000 10%,#000 88%,transparent 99%),linear-gradient(to right,transparent .5%,#000 8.5%,#000 92.5%,transparent 99.5%);mask-composite:intersect}
+.face-portrait{position:fixed;z-index:1;left:79.2%;top:49.5%;height:min(83vh,1382px);aspect-ratio:2/3;transform:translate3d(-50%,-50%,0);pointer-events:none;opacity:1;mix-blend-mode:lighten;transition:opacity .65s ease,transform 1.2s var(--ease);-webkit-mask-image:linear-gradient(to bottom,transparent .5%,#000 10%,#000 88%,transparent 99%),linear-gradient(to right,transparent .5%,#000 8.5%,#000 92.5%,transparent 99.5%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent .5%,#000 10%,#000 88%,transparent 99%),linear-gradient(to right,transparent .5%,#000 8.5%,#000 92.5%,transparent 99.5%);mask-composite:intersect}
 .face-portrait img{display:block;width:100%;height:100%;object-fit:contain;user-select:none}
 body.webgl-ready .face-portrait{opacity:0}
 body:not([data-scene="0"]) .face-portrait{opacity:0;transform:translate3d(calc(-50% + 6vw),-50%,0) scale(.94)}
