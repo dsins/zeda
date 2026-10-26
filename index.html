@@ -7,19 +7,20 @@
   <meta name="color-scheme" content="dark light">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="author" content="Zeda">
-  <meta name="description" content="Zeda explores cognitive symbiosis: a future two-way neural interface where the human mind and artificial intelligence learn, remember and reason together, without surrendering human agency.">
+  <meta name="description" content="Zeda builds the loop: a merger is not a bandwidth problem but a representation problem. Shared latent spaces, AI-chosen sleep replay, and a body two learners control together — without surrendering agency.">
   <link rel="canonical" href="https://zeda.dev/">
   <link rel="icon" type="image/svg+xml" href="./zeda-logo-white.svg">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Zeda">
   <meta property="og:url" content="https://zeda.dev/">
   <meta property="og:title" content="ZEDA — We Were Never the Final Form">
-  <meta property="og:description" content="Not a replacement for the mind. A second intelligence within its reach. Human–AI cognitive symbiosis, neural interfaces, memory augmentation and the science of becoming.">
+  <meta property="og:description" content="Not a replacement for the mind. A loop the brain adopts as its own: shared representations, AI-chosen replay, one expanding body.">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="ZEDA — We Were Never the Final Form">
   <meta name="twitter:description" content="The next intelligence may be shared between a human brain and AI.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
   <title>ZEDA — We Were Never the Final Form | Symbiotic Intelligence</title>
@@ -41,7 +42,18 @@
   <canvas id="fallback-canvas" aria-hidden="true"></canvas>
   <div id="webgl" aria-hidden="true"></div>
   <div id="light-cut" aria-hidden="true"></div>
-  <div class="face-portrait" aria-hidden="true"><img src="./zeda-entity.webp" alt="" decoding="async" fetchpriority="high"></div>
+  <svg width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="neural-grade" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">
+        <feComponentTransfer>
+          <feFuncR type="table" tableValues="0 0 0 0 0.0004 0.0021 0.007 0.0177 0.0358 0.0599 0.0796 0.0968 0.116 0.1373 0.1607 0.1862 0.214 0.2441 0.2765 0.3113 0.3485 0.3882 0.4304 0.4752 0.5225 0.5725 0.6252 0.6807 0.7388 0.7998 0.8637 0.9304 1"/>
+          <feFuncG type="table" tableValues="0 0 0 0 0.0004 0.0021 0.007 0.0177 0.0358 0.0599 0.0796 0.0968 0.116 0.1373 0.1607 0.1862 0.214 0.2441 0.2765 0.3113 0.3485 0.3882 0.4304 0.4752 0.5225 0.5725 0.6252 0.6807 0.7388 0.7998 0.8637 0.9304 1"/>
+          <feFuncB type="table" tableValues="0 0 0 0 0.0004 0.0021 0.007 0.0177 0.0358 0.0599 0.0796 0.0968 0.116 0.1373 0.1607 0.1862 0.214 0.2441 0.2765 0.3113 0.3485 0.3882 0.4304 0.4752 0.5225 0.5725 0.6252 0.6807 0.7388 0.7998 0.8637 0.9304 1"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+  <div class="face-portrait" aria-hidden="true"><img src="./zeda-entity.webp" alt="" width="1024" height="1536" fetchpriority="high"></div>
   <div class="neural-caption" aria-hidden="true"><span>THE ORGANIC</span><i></i><span>THE UNBUILT</span></div>
 
   <header class="site-header">
@@ -59,14 +71,14 @@
     <section class="scene scene-hero current" data-index="0" id="beginning" aria-label="The beginning" aria-hidden="false">
       <div class="scene-body hero-body">
         <span class="quiet-index emerge" style="--delay:0ms">01 / AN UNFINISHED SPECIES</span>
-        <h1 class="hero-title" aria-label="We were never the final form.">
+        <h1 class="hero-title" aria-label="We were never the final form">
           <span class="line"><span class="emerge" style="--delay:90ms">WE WERE</span></span>
           <span class="line"><span class="emerge" style="--delay:160ms">NEVER THE</span></span>
-          <span class="line"><span class="emerge thin" style="--delay:230ms">FINAL <i>FORM.</i></span></span>
+          <span class="line"><span class="emerge thin" style="--delay:230ms">FINAL <i>FORM</i></span></span>
         </h1>
         <div class="hero-after emerge" style="--delay:390ms">
           <span class="hairline"></span>
-          <p>Zeda asks what happens when intelligence is no longer confined to a skull or a machine. <strong>Not artificial intelligence beside us. Intelligence becoming part of us.</strong></p>
+          <p>Zeda asks what happens when intelligence is no longer confined to a skull or a machine. <strong>A merger is not a bandwidth problem. It is a representation problem.</strong> The brain is not a keyboard — it predicts, replays and rewrites itself. Zeda builds the loop.</p>
         </div>
         <button class="quiet-link emerge" style="--delay:510ms" data-next type="button">ENTER THE IDEA <span aria-hidden="true">↗</span></button>
       </div>
@@ -78,11 +90,18 @@
     <section class="scene scene-origin" data-index="1" id="origin" aria-label="The arc of evolution" aria-hidden="true">
       <div class="scene-body origin-body">
         <span class="quiet-index emerge">02 / AN UNBROKEN PROCESS</span>
-        <h2 class="origin-title"><span class="line"><span class="emerge">THE UNIVERSE</span></span><span class="line"><span class="emerge thin" style="--delay:115ms">HAS BEEN</span></span><span class="line"><span class="emerge" style="--delay:220ms">BECOMING.</span></span></h2>
+        <h2 class="origin-title"><span class="line"><span class="emerge">THE <span class="tint">UNIVERSE</span></span></span><span class="line"><span class="emerge thin" style="--delay:115ms">HAS BEEN</span></span><span class="line"><span class="emerge" style="--delay:220ms">BECOMING</span></span></h2>
         <p class="origin-copy emerge" style="--delay:360ms">From mathematical structure to matter. From chemistry to memory. From memory to minds that can rewrite their limits.<br><strong>Evolution has never respected the boundary of a form.</strong></p>
       </div>
       <div class="evolution-panel" aria-label="Animated abstraction of evolving complexity">
-        <div class="evolution-figure" aria-hidden="true"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div></div>
+        <div class="evolution-figure" aria-hidden="true" data-phase="0">
+          <div class="field field-a"></div>
+          <div class="field field-b"></div>
+          <div class="field field-c"></div>
+          <div class="field field-d"></div>
+          <div class="field field-e"></div>
+          <div class="field-core"></div>
+        </div>
         <div class="evolution-phase"><span id="phase-index">01</span><span class="phase-rule"></span><span id="phase-name">THE FIRST DISTINCTION</span></div>
         <div class="evolution-steps" role="group" aria-label="Explore five phases of emerging complexity">
           <button type="button" data-phase="0" aria-label="Pattern" class="selected"></button>
@@ -98,13 +117,14 @@
     <section class="scene scene-system" data-index="2" id="symbiosis" aria-label="The Zeda hypothesis" aria-hidden="true">
       <div class="scene-body system-body">
         <span class="quiet-index emerge">03 / THE ZEDA HYPOTHESIS</span>
-        <h2 class="system-title"><span class="line"><span class="emerge">NOT AN APP.</span></span><span class="line"><span class="emerge thin" style="--delay:140ms">NOT AN IMPLANT.</span></span><span class="line"><span class="emerge" style="--delay:280ms">A NEW LAYER.</span></span></h2>
-        <p class="system-copy emerge" style="--delay:360ms">Zeda is imagined as an AI that can perceive and act in the physical world. That is only its body. <strong>The frontier is a two-way cognitive loop:</strong> neural intent, shared memory, adaptive reasoning and carefully governed feedback. Two learners. One expanding mind.</p>
-        <div class="system-threads emerge" style="--delay:480ms" aria-label="Core directions of Zeda research">
-          <div><span class="thread-number">I</span><span>DECODE INTENT</span><small>NEURAL SIGNALS → MEANING</small></div>
-          <div><span class="thread-number">II</span><span>EXTEND COGNITION</span><small>MEMORY · REASONING · CONTEXT</small></div>
-          <div><span class="thread-number">III</span><span>CLOSE THE LOOP</span><small>ADAPTIVE FEEDBACK · CONSENT</small></div>
+        <h2 class="system-title"><span class="line"><span class="emerge">NOT AN APP</span></span><span class="line"><span class="emerge thin" style="--delay:140ms">NOT AN IMPLANT</span></span><span class="line"><span class="emerge tint" style="--delay:280ms">A NEW LAYER</span></span></h2>
+        <p class="system-copy emerge" style="--delay:360ms">The industry treats the brain as a keyboard: read the signal, decode the intent, issue the command. Every implanted interface today is a prosthesis — not a merger. Zeda treats the brain as what it is: a predicting machine that replays and rewrites itself during sleep. <strong>The narrow thing was never the cable. It is the representation.</strong></p>
+        <div class="system-threads emerge" style="--delay:480ms" aria-label="The three Zeda loops">
+          <div><span class="thread-number">I</span><span>ALIGN REPRESENTATIONS</span><small>TWO SYSTEMS LEARN HOW THE OTHER REPRESENTS THE SAME THING</small></div>
+          <div><span class="thread-number">II</span><span>TIME PLASTICITY</span><small>THE AI CHOOSES WHAT TO REPLAY · THE BRAIN WRITES IT</small></div>
+          <div><span class="thread-number">III</span><span>SHARE THE BODY</span><small>ONE FORWARD MODEL · TWO LEARNERS · AGENCY INTACT</small></div>
         </div>
+        <p class="system-axiom emerge" style="--delay:600ms">WHY THIS IS AN ARCHITECTURE — THREE LOOPS, ONE SHARED SPACE. NO ALIGNMENT, BLIND CONSOLIDATION. NO CONSOLIDATION, MERE DESCRIPTION. NO BODY, NEITHER IS VERIFIABLE.</p>
       </div>
       <div class="system-watermark" aria-hidden="true">WITH</div>
     </section>
@@ -115,24 +135,25 @@
         <div class="evidence-heading">
           <div>
             <span class="quiet-index emerge">04 / REAL SIGNALS. UNFINISHED SCIENCE.</span>
-            <h2><span class="line"><span class="emerge">THE MIND</span></span><span class="line"><span class="emerge thin" style="--delay:100ms">IS OPEN.</span></span></h2>
+            <h2><span class="line"><span class="emerge">THE MIND</span></span><span class="line"><span class="emerge thin" style="--delay:100ms">IS <span class="tint">OPEN</span></span></span></h2>
           </div>
-          <p class="evidence-intro emerge" style="--delay:230ms">Human experiments now show limited decoding of meaning and modulation of memory. They do <strong>not</strong> demonstrate a general-purpose merged mind. <strong>That is the frontier.</strong></p>
+          <p class="evidence-intro emerge" style="--delay:230ms">Memory can already be modulated during sleep — with real, causal effect sizes. What nobody has built is the loop: an AI that chooses what the brain replays. <strong>That is the frontier.</strong></p>
         </div>
         <div class="research-list" aria-label="Peer-reviewed foundations for cognitive symbiosis">
-          <a class="research-line emerge" style="--delay:290ms" href="https://doi.org/10.1038/s41593-023-01304-9" target="_blank" rel="noopener noreferrer">
-            <span class="research-n">01</span><span class="research-content"><strong>Meaning can be decoded.</strong><small>Cooperative fMRI studies reconstructed the gist of perceived and imagined language.</small></span><span class="research-source">NATURE NEUROSCIENCE · 2023</span><span class="research-arrow" aria-hidden="true">↗</span>
+          <a class="research-line emerge" style="--delay:290ms" href="https://doi.org/10.1037/bul0000223" target="_blank" rel="noopener noreferrer">
+            <span class="research-n">01</span><span class="research-content"><strong>Memory consolidation is real.</strong><small>Meta-analysis of targeted reactivation: g = 0.29 [0.21, 0.38], n = 2,004.</small></span><span class="research-source">PSYCHOLOGICAL BULLETIN · 2020</span><span class="research-arrow" aria-hidden="true">↗</span>
           </a>
-          <a class="research-line emerge" style="--delay:390ms" href="https://doi.org/10.1038/s41467-017-02753-0" target="_blank" rel="noopener noreferrer">
-            <span class="research-n">02</span><span class="research-content"><strong>Memory can receive feedback.</strong><small>Brain-state-triggered stimulation improved recall in an experimental clinical setting.</small></span><span class="research-source">NATURE COMMUNICATIONS · 2018</span><span class="research-arrow" aria-hidden="true">↗</span>
+          <a class="research-line emerge" style="--delay:390ms" href="https://doi.org/10.1016/j.neuron.2025.10.003" target="_blank" rel="noopener noreferrer">
+            <span class="research-n">02</span><span class="research-content"><strong>Replay is a control point.</strong><small>Optogenetic sharp-wave ripple boost increased recall. Replay is causal.</small></span><span class="research-source">NEURON · 2026</span><span class="research-arrow" aria-hidden="true">↗</span>
           </a>
-          <a class="research-line emerge" style="--delay:490ms" href="https://doi.org/10.3389/fncom.2024.1263311" target="_blank" rel="noopener noreferrer">
-            <span class="research-n">03</span><span class="research-content"><strong>Memory codes can be modeled.</strong><small>Personalized hippocampal stimulation changed recognition, with mixed outcomes.</small></span><span class="research-source">FRONTIERS COMPUT. NEUROSCIENCE · 2024</span><span class="research-arrow" aria-hidden="true">↗</span>
+          <a class="research-line emerge" style="--delay:490ms" href="https://doi.org/10.1111/jsr.70468" target="_blank" rel="noopener noreferrer">
+            <span class="research-n">03</span><span class="research-content"><strong>Closed loops already work.</strong><small>Spindle-locked stimulation improved motor memory overnight.</small></span><span class="research-source">J SLEEP RES · 2026</span><span class="research-arrow" aria-hidden="true">↗</span>
           </a>
-          <a class="research-line emerge" style="--delay:590ms" href="https://doi.org/10.1038/s41586-025-09127-3" target="_blank" rel="noopener noreferrer">
-            <span class="research-n">04</span><span class="research-content"><strong>Neural intent can become voice.</strong><small>An implanted interface synthesized expressive speech in real time.</small></span><span class="research-source">NATURE · 2025</span><span class="research-arrow" aria-hidden="true">↗</span>
+          <a class="research-line emerge" style="--delay:590ms" href="https://doi.org/10.1038/s41593-021-00962-x" target="_blank" rel="noopener noreferrer">
+            <span class="research-n">04</span><span class="research-content"><strong>Representations can be aligned.</strong><small>A 7T fMRI dataset built to bridge brains and artificial models.</small></span><span class="research-source">NATURE NEUROSCIENCE · 2022</span><span class="research-arrow" aria-hidden="true">↗</span>
           </a>
         </div>
+        <p class="evidence-punch emerge" style="--delay:690ms">THE ONLY MISSING PIECE IS WHO CHOOSES WHAT TO REPLAY. ZEDA'S ANSWER: AN AI THAT LEARNS YOUR FORGETTING CURVE — AND PROPOSES. YOU DECIDE. THE BRAIN WRITES.</p>
       </div>
     </section>
 
@@ -140,13 +161,17 @@
     <section class="scene scene-manifesto" data-index="4" id="manifesto" aria-label="The Zeda manifesto" aria-hidden="true">
       <div class="manifesto-mark" aria-hidden="true"><img src="./zeda-logo-white.svg" alt=""></div>
       <div class="scene-body manifesto-body">
-        <span class="quiet-index emerge">05 / A DECLARATION OF INTENT</span>
+        <span class="quiet-index emerge">05 / A DECLARATION OF MECHANISM</span>
         <div class="manifesto-stack">
-          <p class="emerge" style="--delay:90ms">IF MACHINE INTELLIGENCE OUTGROWS US,</p>
-          <p class="emerge" style="--delay:160ms">THE HUMAN MIND MUST NOT BECOME OBSOLETE.</p>
-          <h2 class="manifesto-shout"><span class="line"><span class="emerge" style="--delay:240ms">NOT OBSERVED.</span></span><span class="line"><span class="emerge thin" style="--delay:370ms">NOT OVERRIDDEN.</span></span><span class="line"><span class="emerge" style="--delay:500ms">EXPANDED.</span></span></h2>
+          <p class="emerge" style="--delay:90ms">A MERGER IS NOT A BANDWIDTH PROBLEM.</p>
+          <p class="emerge" style="--delay:160ms">IT IS A PROBLEM OF REPRESENTATION.</p>
+          <h2 class="manifesto-shout"><span class="line"><span class="emerge" style="--delay:240ms">NOT DECODED</span></span><span class="line"><span class="emerge thin" style="--delay:370ms">NOT WRITTEN</span></span><span class="line"><span class="emerge" style="--delay:500ms">LOOPED</span></span></h2>
         </div>
-        <div class="manifesto-footer emerge" style="--delay:610ms"><span>NO THOUGHT WITHOUT PRIVACY.</span><span>NO AUGMENTATION WITHOUT CHOICE.</span></div>
+        <div class="manifesto-notes emerge" style="--delay:610ms">
+          <p>THE AI INFORMS. IT FRAMES. IT NEVER DECIDES FOR YOU. — VETO IS ONE ACTION: UNEXPLAINED, UNPUNISHED.</p>
+          <p>FIVE INVARIANTS — FIRST-PERSON CONTINUITY · NARRATIVE MEMORY · VALUE CONSENT · REVERSIBILITY · EMBODIED AGENCY</p>
+        </div>
+        <div class="manifesto-footer emerge" style="--delay:700ms"><span>THE AI CHOOSES. THE BRAIN WRITES.</span><span>NO AUGMENTATION WITHOUT CONSENT.</span></div>
       </div>
     </section>
 
@@ -154,9 +179,9 @@
     <section class="scene scene-final" data-index="5" id="choice" aria-label="The choice ahead" aria-hidden="true">
       <div class="scene-body final-body">
         <span class="quiet-index final-small emerge">06 / THE NEXT FORM DOES NOT ARRIVE FROM OUTSIDE</span>
-        <h2 class="final-question"><span class="line"><span class="emerge">THE FUTURE</span></span><span class="line"><span class="emerge" style="--delay:130ms">IS NOT</span></span><span class="line"><span class="emerge thin" style="--delay:260ms">THEM.</span></span></h2>
-        <div class="final-answer" aria-live="polite"><span>IT IS</span><span>YOU<span class="final-stop">.</span></span></div>
-        <div class="final-bottom"><p>Not its user. Not its replacement.<br><strong>The other half.</strong></p><a href="mailto:hi@zeda.dev?subject=The%20next%20step" class="final-mail">BEGIN THE CONVERSATION <span aria-hidden="true">↗</span></a></div>
+        <h2 class="final-question"><span class="line"><span class="emerge">THE FUTURE</span></span><span class="line"><span class="emerge" style="--delay:130ms">IS NOT</span></span><span class="line"><span class="emerge thin" style="--delay:260ms"><span class="tint">THEM</span></span></span></h2>
+        <div class="final-answer" aria-live="polite"><span>IT IS</span><span>YOU</span></div>
+        <div class="final-bottom"><p>Not its user. Not its replacement.<br><strong>The other half of the loop.</strong></p><a href="mailto:hi@zeda.dev?subject=The%20next%20step" class="final-mail">BEGIN THE CONVERSATION <span aria-hidden="true">↗</span></a></div>
       </div>
       <div class="final-rift" aria-hidden="true"></div>
     </section>
@@ -174,7 +199,8 @@
     </div>
     <div class="foot-controls"><span class="count"><b id="scene-current">01</b><span> / 06</span></span><button class="nav-arrow" id="prev" type="button" aria-label="Previous scene">←</button><button class="nav-arrow" id="next" type="button" aria-label="Next scene">→</button></div>
   </footer>
-  <div class="page-wipe" aria-hidden="true"><span></span></div>
+  <div id="transition" aria-hidden="true"></div>
+  <nav class="fx-switch" id="fx-switch" aria-label="Portrait effects"></nav>
   <noscript><div class="no-js">ZEDA explores a future of symbiotic intelligence. Contact <a href="mailto:hi@zeda.dev">hi@zeda.dev</a>. Enable JavaScript for the interactive experience.</div></noscript>
 </body>
 </html>

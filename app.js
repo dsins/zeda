@@ -33,6 +33,8 @@
     state.phase = (next + phaseNames.length) % phaseNames.length;
     $('#phase-index').textContent = pad(state.phase + 1);
     $('#phase-name').textContent = phaseNames[state.phase];
+    const fig = $('.evolution-figure');
+    if (fig) fig.setAttribute('data-phase', String(state.phase));
     phases.forEach((button, i) => {
       button.classList.toggle('selected', i === state.phase);
       button.setAttribute('aria-pressed', String(i === state.phase));
@@ -94,18 +96,84 @@
     if (index === 5) unlockFinal();
     else cancelFinal();
   }
+  /* ---- v3: soft dip transition ---- */
+  const txRoot = $('#transition');
+  function runTransition(onMid, done) {
+    txRoot.classList.add('active');
+    document.body.classList.add('is-transitioning');
+    setTimeout(onMid, 380);
+    setTimeout(() => {
+      txRoot.classList.remove('active');
+      document.body.classList.remove('is-transitioning');
+      done();
+    }, 820);
+  }
+
+  /* ---- portrait effect field: fifteen grades, one random on load, switchable ---- */
+  const FX_NAMES = ['RAW','GLITCH','PIXEL','SOLAR','GHOST','RGB','BLOOM','NOIR','SCAN','EDGE'];
+  const fxNav = $('#fx-switch');
+  let fxA = 0, fxB = 0, FXU = null, fxTick = 0;
+  FX_NAMES.forEach((name, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'fx-line';
+    b.dataset.fx = String(i);
+    b.setAttribute('aria-label', 'Effect: ' + name);
+    b.innerHTML = '<span class="fx-tip">' + name + '</span>';
+    b.addEventListener('click', () => setFx(i));
+    fxNav.appendChild(b);
+  });
+  function paintFxUI() {
+    $$('.fx-line').forEach((b, i) => b.classList.toggle('is-current', i === fxB));
+  }
+  function setFx(target) {
+    if (target === fxB) return;
+    fxA = fxB; fxB = target;
+    document.body.dataset.fx = String(target);
+    paintFxUI();
+    if (!FXU) return;
+    fxTick++;
+    FXU.fxA.value = fxA;
+    FXU.fxB.value = fxB;
+    FXU.fxMix.value = 0;
+    const myTick = fxTick;
+    const t0 = performance.now();
+    const tick = (now) => {
+      if (myTick !== fxTick) return;
+      const raw = clamp((now - t0) / 2600, 0, 1);
+      FXU.fxMix.value = raw * raw * (3 - 2 * raw);
+      if (raw < 1) requestAnimationFrame(tick);
+      else { fxA = fxB; FXU.fxA.value = fxA; FXU.fxMix.value = 0; paintFxUI(); }
+    };
+    requestAnimationFrame(tick);
+  }
+  fxB = 0;
+  fxA = 0;
+  document.body.dataset.fx = '0';
+  paintFxUI();
+  // otomatik dongu: ~7 sn'de bir rastgele farkli efekt
+  let fxCycleTimer = null;
+  function startFxCycle() {
+    if (fxCycleTimer) clearInterval(fxCycleTimer);
+    fxCycleTimer = setInterval(() => {
+      if (!state.active || document.body.dataset.scene !== '0') return;
+      let nxt = fxB;
+      while (nxt === fxB) nxt = Math.floor(Math.random() * FX_NAMES.length);
+      setFx(nxt);
+    }, 12000);
+  }
+  startFxCycle();
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') { if (fxCycleTimer) clearInterval(fxCycleTimer); fxCycleTimer = null; }
+    else startFxCycle();
+  });
+
   function goTo(index) {
     index = clamp(index, 0, scenes.length - 1);
     if (index === state.index || state.busy) return;
-    if (reduced) {commit(index); return;}
+    if (reduced) { commit(index); return; }
     state.busy = true;
-    document.body.classList.add('is-transitioning');
-    // The new scene is committed while the screen is completely occluded.
-    setTimeout(() => commit(index), 455);
-    setTimeout(() => {
-      document.body.classList.remove('is-transitioning');
-      state.busy = false;
-    }, 1025);
+    runTransition(() => commit(index), () => { state.busy = false; });
   }
   $('#prev').addEventListener('click', () => goTo(state.index - 1));
   $('#next').addEventListener('click', () => goTo(state.index + 1));
@@ -143,6 +211,8 @@
   window.addEventListener('pointermove', (event) => {
     state.pointerX = event.clientX / window.innerWidth * 2 - 1;
     state.pointerY = event.clientY / window.innerHeight * 2 - 1;
+    document.documentElement.style.setProperty('--ppx', state.pointerX.toFixed(3));
+    document.documentElement.style.setProperty('--ppy', state.pointerY.toFixed(3));
   }, {passive:true});
   document.addEventListener('visibilitychange', () => {
     state.active = document.visibilityState !== 'hidden';
@@ -238,7 +308,7 @@
     let renderer;
     try {
       renderer = new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreference:'high-performance'});
-      renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.7));
+      renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
       renderer.setSize(innerWidth,innerHeight);
       renderer.setClearColor(0x000000,0);
       renderer.outputColorSpace=THREE.SRGBColorSpace;
@@ -251,10 +321,13 @@
     let tex;
     try {tex=await load.loadAsync('./zeda-entity.webp');}
     catch(e){renderer.dispose();$('#webgl').replaceChildren();return;}
-    tex.colorSpace=THREE.SRGBColorSpace;
+    // Texture bytes pass through raw — the canvas displays the original sRGB values.
+    // (No sRGB decode/re-encode: that path made the portrait render darker and orange.)
     const uniforms={
-      map:{value:tex}, time:{value:0}, alpha:{value:1}, pointer:{value:new THREE.Vector2()}, activity:{value:1}
+      map:{value:tex}, time:{value:0}, alpha:{value:1}, pointer:{value:new THREE.Vector2()}, activity:{value:1},
+      fxA:{value:fxA}, fxB:{value:fxB}, fxMix:{value:0}
     };
+    FXU = uniforms;
     const living = new THREE.ShaderMaterial({
       uniforms, transparent:true,depthWrite:false,side:THREE.DoubleSide,
       vertexShader:`
@@ -275,6 +348,21 @@
       fragmentShader:`
         varying vec2 vUv;
         uniform sampler2D map; uniform float time; uniform float alpha; uniform float activity;
+        uniform float fxA; uniform float fxB; uniform float fxMix;
+        float hash21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
+        vec3 fxSamp(vec2 u){return texture2D(map,u).rgb;}
+        vec3 fxApply(int i, vec2 u, vec3 c){
+          if(i==1){ float n=floor(u.y*64.); float off=(hash21(vec2(n,floor(time*12.)))-.5)*.06*step(.7,hash21(vec2(n,7.))); vec2 du=vec2(off,0.); vec3 g=fxSamp(u+du); float tear=step(.92,hash21(vec2(n,3.)))*.14; return vec3(g.r,fxSamp(u+du+vec2(tear,0.)).g,fxSamp(u+du-vec2(tear,0.)).b); }
+          if(i==2){ vec2 pu=floor(u*44.)/44.; return fxSamp(pu); }
+          if(i==3){ vec3 s=mix(c,1.-c,step(.5,c)); return s*1.25; }
+          if(i==4){ return clamp(c*.7+fxSamp(u-vec2(.013,0.))*.5,0.,1.); }
+          if(i==5){ vec2 o=vec2(.015,0.); return vec3(fxSamp(u+o).r,fxSamp(u).g,fxSamp(u-o).b); }
+          if(i==6){ vec3 b=c*.55; for(int k=0;k<4;k++){ float r=float(k+1)*.007; vec2 d=vec2(cos(float(k)*1.7+time*.5),sin(float(k)*2.3-time*.3))*r; b+=fxSamp(u+d)*.13; } return b; }
+          if(i==7){ float l=dot(c,vec3(.299,.587,.114)); l=smoothstep(.16,.82,l); return vec3(l*l); }
+          if(i==8){ float scan=sin(u.y*900.+time*7.)*.16; float roll=smoothstep(.5,1.,fract(time*.07))*.4; return c*(1.+scan)*(1.+roll); }
+          if(i==9){ vec2 e=vec2(.0035,0.); float gx=dot(fxSamp(u+e),vec3(.3,.6,.1))-dot(fxSamp(u-e),vec3(.3,.6,.1)); vec2 e2=vec2(0.,.0035); float gy=dot(fxSamp(u+e2),vec3(.3,.6,.1))-dot(fxSamp(u-e2),vec3(.3,.6,.1)); float m=clamp(length(vec2(gx,gy))*6.,0.,1.); return vec3(m*.9,m*.95,1.)*m; }
+          return c;
+        }
         void main(){
           float alive=smoothstep(.48,.78,vUv.x)*activity;
           vec2 uv=vUv;
@@ -284,6 +372,8 @@
           vec3 col=texture2D(map,uv).rgb;
           float micro=alive*.036*sin(uv.x*370.0+time*.7)*sin(uv.y*221.0-time*.28);
           col+=micro;
+          col=fxApply(int(fxA),uv,col);
+          col=mix(col,fxApply(int(fxB),uv,col),fxMix);
           float edge=smoothstep(.005,.085,vUv.x)*smoothstep(.005,.075,1.0-vUv.x)*smoothstep(.01,.12,vUv.y)*smoothstep(.01,.1,1.0-vUv.y);
           float luminosity=max(col.r,max(col.g,col.b));
           float darkAlpha=smoothstep(.008,.075,luminosity);
@@ -334,7 +424,7 @@
     const dust=new THREE.Points(dustGeometry,dustMat);
     scene.add(dust);
     const clock=new THREE.Clock();
-    let smoothAlpha=0,smoothDust=0;
+    let smoothAlpha=state.index===0?1:0,smoothDust=0;
     const resize=()=>{
       const w=innerWidth,h=innerHeight;
       camera.left=-w/2;camera.right=w/2;camera.top=h/2;camera.bottom=-h/2;camera.updateProjectionMatrix();
@@ -351,7 +441,7 @@
       const target=state.index===0?1:0;
       smoothAlpha=lerp(smoothAlpha,target,.045);
       uniforms.alpha.value=smoothAlpha;
-      const vh=mobile?h*.74:h*.92;
+      const vh=Math.min(mobile?h*.74:h*.92, 1536);
       portrait.scale.set(vh*2/3,vh,1);
       portrait.position.set(mobile?w*.16:w*.292,mobile?h*.17:h*.005,0);
       portrait.rotation.z=state.pointerX*.0035;
@@ -385,8 +475,8 @@
       renderer.render(scene,camera);
     }
     state.glReady=true;
-    document.body.classList.add('webgl-ready');
     frame();
+    document.body.classList.add('webgl-ready');
   }
   startThree();
 })();
