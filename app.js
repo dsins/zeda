@@ -251,6 +251,16 @@
   if (initial > 0) commit(initial);
   else commit(0);
 
+  // Header: deterministic daily working-capacity figure (38-96).
+  const capEl = $('#capacity-pct');
+  if (capEl) {
+    const dn = new Date();
+    const seed = dn.getFullYear()*372 + (dn.getMonth()+1)*31 + dn.getDate();
+    const hv = Math.sin(seed*12.9898)*43758.5453;
+    const pct = 38 + Math.floor((hv - Math.floor(hv))*59);
+    capEl.textContent = capEl.dataset.locale === 'tr' ? '%'+pct : pct+'%';
+  }
+
   // CANVAS FALLBACK: procedural particle states also work if WebGL is unavailable.
   const fallbackCanvas = $('#fallback-canvas');
   const cx = fallbackCanvas.getContext('2d', {alpha:true});
