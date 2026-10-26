@@ -64,7 +64,7 @@
   }
   function unlockFinal() {
     cancelFinal();
-    if (state.index === 5) {
+    if (state.index === scenes.length - 1) {
       state.finalTimer = setTimeout(() => {
         document.body.classList.add('final-unlocked');
       }, reduced ? 120 : 1900);
@@ -93,20 +93,51 @@
     updateMeta(index);
     if (index === 1) startPhaseCycle();
     else stopPhaseCycle();
-    if (index === 5) unlockFinal();
+    if (index === scenes.length - 1) unlockFinal();
     else cancelFinal();
   }
-  /* ---- v3: soft dip transition ---- */
+  /* ---- v3: soft dip transition with a genetic particle flow ---- */
   const txRoot = $('#transition');
+  const txCanvas = $('#tx-canvas');
+  const txc = txCanvas.getContext('2d');
+  function sizeTx() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    txCanvas.width = Math.round(innerWidth * dpr);
+    txCanvas.height = Math.round(innerHeight * dpr);
+    txc.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
   function runTransition(onMid, done) {
+    sizeTx();
+    const w = innerWidth, h = innerHeight, DUR = 820;
     txRoot.classList.add('active');
     document.body.classList.add('is-transitioning');
+    const started = performance.now();
+    const step = (now) => {
+      const t = clamp((now - started) / DUR, 0, 1);
+      txc.clearRect(0, 0, w, h);
+      const a = Math.sin(Math.min(t / .22, 1) * Math.PI) * (1 - Math.pow(Math.max((t - .72) / .28, 0), 2));
+      const cols = Math.floor(w / 26);
+      for (let i = 0; i < cols; i++) {
+        const x = (i + .5) * w / cols;
+        const ph = x / w * Math.PI * 5 + t * 2.4;
+        txc.fillStyle = `rgba(235,233,227,${(.3 * a).toFixed(3)})`;
+        txc.beginPath(); txc.arc(x, h / 2 + Math.sin(ph) * h * .16, 1.3, 0, Math.PI * 2); txc.fill();
+        txc.beginPath(); txc.arc(x, h / 2 + Math.sin(ph + Math.PI) * h * .16, 1.0, 0, Math.PI * 2); txc.fill();
+        if (i % 3 === 0) {
+          txc.fillStyle = `rgba(211,149,131,${(.45 * a).toFixed(3)})`;
+          txc.beginPath(); txc.arc(x, h / 2 + Math.sin(ph + Math.PI / 2) * h * .16, 1.9, 0, Math.PI * 2); txc.fill();
+        }
+      }
+      if (t < 1) requestAnimationFrame(step);
+      else txc.clearRect(0, 0, w, h);
+    };
+    requestAnimationFrame(step);
     setTimeout(onMid, 380);
     setTimeout(() => {
       txRoot.classList.remove('active');
       document.body.classList.remove('is-transitioning');
       done();
-    }, 820);
+    }, DUR);
   }
 
   /* ---- portrait effect field: fifteen grades, one random on load, switchable ---- */
@@ -197,7 +228,7 @@
     } else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(event.key)) {
       event.preventDefault();goTo(state.index - 1);
     } else if (event.key === 'Home') {event.preventDefault();goTo(0);}
-    else if (event.key === 'End') {event.preventDefault();goTo(5);}
+    else if (event.key === 'End') {event.preventDefault();goTo(scenes.length - 1);}
   });
   window.addEventListener('touchstart', (event) => {
     if (event.touches.length === 1) state.touchY = event.touches[0].clientY;
