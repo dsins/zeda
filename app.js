@@ -187,6 +187,7 @@
       if (fxTrans === null && fxQueued !== null) {
         const q = fxQueued; fxQueued = null;
         beginFx(q);
+        fxVisibleAt = now;
       }
     }
     const dwell = fxB === 0 ? 24000 : 12000; // RAW iki kat sure
@@ -202,7 +203,7 @@
   document.body.dataset.fx = String(fxB);
   paintFxUI();
   document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) fxVisibleAt = performance.now();
+    if (!document.hidden) fxVisibleAt = Math.max(fxVisibleAt, performance.now() - (fxB === 0 ? 24000 : 12000) + 1500);
   });
 
   function goTo(index) {
