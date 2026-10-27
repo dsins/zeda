@@ -208,10 +208,18 @@
 
   function goTo(index) {
     index = clamp(index, 0, scenes.length - 1);
-    if (index === state.index || state.busy) return;
+    if (index === state.index) return;
+    if (state.busy) { state.pendingNav = index; return; }
+    state.pendingNav = null;
     if (reduced) { commit(index); return; }
     state.busy = true;
-    runTransition(() => commit(index), () => { state.busy = false; });
+    runTransition(() => commit(index), () => {
+      state.busy = false;
+      if (state.pendingNav !== null && state.pendingNav !== undefined) {
+        const next = state.pendingNav; state.pendingNav = null;
+        goTo(next);
+      }
+    });
   }
   $('#prev').addEventListener('click', () => goTo(state.index - 1));
   $('#next').addEventListener('click', () => goTo(state.index + 1));
