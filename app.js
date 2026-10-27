@@ -157,7 +157,7 @@
   function paintFxUI() {
     $$('.fx-line').forEach((b, i) => b.classList.toggle('is-current', i === fxB));
   }
-  let fxTrans = null, fxQueued = null, fxLastCycle = performance.now();
+  let fxTrans = null, fxQueued = null, fxVisibleAt = performance.now();
   function beginFx(target) {
     if (target === fxB) return;
     fxA = fxB; fxB = target;
@@ -181,6 +181,7 @@
           fxTrans = null; fxA = fxB;
           FXU.fxA.value = fxA; FXU.fxMix.value = 0;
           paintFxUI();
+          fxVisibleAt = now; // sure, efekt gorunur oldugu andan itibaren sayilir
         }
       }
       if (fxTrans === null && fxQueued !== null) {
@@ -188,15 +189,20 @@
         beginFx(q);
       }
     }
-    if (now - fxLastCycle >= 12000) {
-      fxLastCycle = now;
-      if (!reduced && state.active && !document.hidden && document.body.dataset.scene === '0') {
+    const dwell = fxB === 0 ? 24000 : 12000; // RAW iki kat sure
+    if (now - fxVisibleAt >= dwell) {
+      if (!reduced && state.active && !document.hidden && document.body.dataset.scene === '0' && fxTrans === null) {
+        fxVisibleAt = now;
         setFx((fxB + 1) % FX_NAMES.length);
+      } else {
+        fxVisibleAt = now - dwell + 2000; // sahne degilse/gizliyse kisa ertele
       }
     }
   }
+  document.body.dataset.fx = String(fxB);
+  paintFxUI();
   document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) fxLastCycle = performance.now();
+    if (!document.hidden) fxVisibleAt = performance.now();
   });
 
   function goTo(index) {
