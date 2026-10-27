@@ -143,7 +143,7 @@
   /* ---- portrait effect field: fifteen grades, one random on load, switchable ---- */
   const FX_NAMES = ['RAW','PIXEL','SOLAR','GHOST','RGB','BLOOM','NOIR','SCAN','EDGE'];
   const fxNav = $('#fx-switch');
-  let fxA = 0, fxB = 0, FXU = null, fxTick = 0;
+  let fxA = 0, fxB = 0, FXU = null;
   FX_NAMES.forEach((name, i) => {
     const b = document.createElement('button');
     b.type = 'button';
@@ -157,44 +157,46 @@
   function paintFxUI() {
     $$('.fx-line').forEach((b, i) => b.classList.toggle('is-current', i === fxB));
   }
-  function setFx(target) {
+  let fxTrans = null, fxQueued = null, fxLastCycle = performance.now();
+  function beginFx(target) {
     if (target === fxB) return;
     fxA = fxB; fxB = target;
     document.body.dataset.fx = String(target);
     paintFxUI();
-    if (!FXU) return;
-    fxTick++;
-    FXU.fxA.value = fxA;
-    FXU.fxB.value = fxB;
-    FXU.fxMix.value = 0;
-    const myTick = fxTick;
-    const t0 = performance.now();
-    const tick = (now) => {
-      if (myTick !== fxTick) return;
-      const raw = clamp((now - t0) / 2600, 0, 1);
-      FXU.fxMix.value = raw * raw * (3 - 2 * raw);
-      if (raw < 1) requestAnimationFrame(tick);
-      else { fxA = fxB; FXU.fxA.value = fxA; FXU.fxMix.value = 0; paintFxUI(); }
-    };
-    requestAnimationFrame(tick);
+    fxTrans = performance.now();
+    if (FXU) { FXU.fxA.value = fxA; FXU.fxB.value = fxB; FXU.fxMix.value = 0; }
   }
-  fxB = 0;
-  fxA = 0;
-  document.body.dataset.fx = '0';
-  paintFxUI();
-  // otomatik dongu: ~7 sn'de bir rastgele farkli efekt
-  let fxCycleTimer = null;
-  function startFxCycle() {
-    if (fxCycleTimer) clearInterval(fxCycleTimer);
-    fxCycleTimer = setInterval(() => {
-      if (!state.active || document.body.dataset.scene !== '0') return;
-      setFx((fxB + 1) % FX_NAMES.length);
-    }, 12000);
+  function setFx(target) {
+    if (fxTrans !== null) { fxQueued = target; return; }
+    beginFx(target);
   }
-  startFxCycle();
+  // Tek surekli dongu besler: gecisler tamamlanmadan yenisi baslamaz, yarim kare atlama yok.
+  function updateFx(now) {
+    if (fxTrans !== null) {
+      if (!FXU) { fxTrans = null; fxA = fxB; }
+      else {
+        const raw = clamp((now - fxTrans) / 2600, 0, 1);
+        FXU.fxMix.value = raw * raw * (3 - 2 * raw);
+        if (raw >= 1) {
+          fxTrans = null; fxA = fxB;
+          FXU.fxA.value = fxA; FXU.fxMix.value = 0;
+          paintFxUI();
+        }
+      }
+      if (fxTrans === null && fxQueued !== null) {
+        const q = fxQueued; fxQueued = null;
+        beginFx(q);
+      }
+    }
+    if (now - fxLastCycle >= 12000) {
+      fxLastCycle = now;
+      if (!reduced && state.active && !document.hidden && document.body.dataset.scene === '0') {
+        setFx((fxB + 1) % FX_NAMES.length);
+      }
+    }
+  }
   document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') { if (fxCycleTimer) clearInterval(fxCycleTimer); fxCycleTimer = null; }
-    else { if (fxTick % 2 || FXU && FXU.fxMix.value > 0) { fxTick++; fxA = fxB; if (FXU) { FXU.fxA.value = fxA; FXU.fxMix.value = 0; } paintFxUI(); } startFxCycle(); }
+    if (!document.hidden) fxLastCycle = performance.now();
   });
 
   function goTo(index) {
@@ -280,6 +282,7 @@
   sizeFallback();
   window.addEventListener('resize', sizeFallback, {passive:true});
   function paintFallback(time) {
+    updateFx(performance.now());
     if (!state.glReady) {
       cx.clearRect(0, 0, innerWidth, innerHeight);
       if (state.index === 1 || state.index === 2) {
