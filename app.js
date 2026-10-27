@@ -229,6 +229,7 @@
   const navOss = $('#nav-open-source');
   if (navOss) navOss.addEventListener('click', (event) => {event.preventDefault(); goTo(5);});
   window.addEventListener('wheel', (event) => {
+    if (event.target && event.target.closest && event.target.closest('.oss-list')) return;
     if (event.ctrlKey || Math.abs(event.deltaY) < 15) return;
     // Prevent the trackpad from firing 12 navigation events on one gesture.
     event.preventDefault();
@@ -269,6 +270,47 @@
   const initial = scenes.findIndex((scene) => scene.id === incoming);
   if (initial > 0) commit(initial);
   else commit(0);
+
+  // 06 / open-source slider: overflow-hidden feel, arrows, wheel-to-horizontal.
+  const ossList = $('.oss-list');
+  if (ossList) {
+    const ossNav = $('.oss-nav');
+    const ossCountNow = ossNav && ossNav.querySelector('.oss-count b');
+    const ossCountTotal = ossNav && ossNav.querySelector('.oss-count span');
+    const ossStep = () => ossList.clientWidth;
+    const ossPages = () => Math.max(1, Math.round(ossList.scrollWidth / Math.max(1, ossList.clientWidth)));
+    function ossUpdate() {
+      const pages = ossPages();
+      if (ossNav) ossNav.classList.toggle('is-on', ossList.scrollWidth > ossList.clientWidth + 8);
+      if (ossCountTotal) ossCountTotal.textContent = String(pages).padStart(2, '0');
+      if (ossCountNow) ossCountNow.textContent = String(Math.min(pages, Math.round(ossList.scrollLeft / Math.max(1, ossList.clientWidth)) + 1)).padStart(2, '0');
+      const prev = ossNav && ossNav.querySelector('.oss-prev');
+      const next = ossNav && ossNav.querySelector('.oss-next');
+      if (prev) prev.disabled = ossList.scrollLeft < 8;
+      if (next) next.disabled = ossList.scrollLeft > ossList.scrollWidth - ossList.clientWidth - 8;
+    }
+    const ossGo = (dir) => {
+      ossList.scrollBy({left: dir * ossStep(), behavior: 'smooth'});
+      setTimeout(ossUpdate, 420);
+    };
+    if (ossNav) {
+      const prev = ossNav.querySelector('.oss-prev'), next = ossNav.querySelector('.oss-next');
+      if (prev) prev.addEventListener('click', () => ossGo(-1));
+      if (next) next.addEventListener('click', () => ossGo(1));
+    }
+    ossList.addEventListener('wheel', (event) => {
+      if (ossList.scrollWidth <= ossList.clientWidth + 8) return;
+      if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+      event.preventDefault();
+      ossList.scrollLeft += event.deltaY;
+    }, {passive:false});
+    ossList.addEventListener('scroll', ossUpdate, {passive:true});
+    addEventListener('resize', ossUpdate, {passive:true});
+    new MutationObserver(() => {
+      if (document.body.dataset.scene === '5') { ossList.scrollLeft = 0; ossUpdate(); }
+    }).observe(document.body, {attributes:true, attributeFilter:['data-scene']});
+    setTimeout(ossUpdate, 300);
+  }
 
   // Header: deterministic daily working-capacity figure (38-96).
   const capEl = $('#capacity-pct');

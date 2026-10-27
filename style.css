@@ -549,3 +549,14 @@ body.final-unlocked .final-dust{opacity:1}
   .oss-intro{-webkit-line-clamp:3}
   .oss-basis{font-size:9px}
 }
+
+.oss-list::-webkit-scrollbar{display:none}
+.oss-list:active{cursor:grabbing}
+.oss-nav{display:none;align-items:center;gap:10px;margin-top:10px}
+.oss-nav.is-on{display:flex}
+.oss-count{font-size:9.5px;letter-spacing:.2em;color:rgba(235,233,227,.42);margin-right:auto}
+.oss-count b{color:var(--chalk);font-weight:600}
+.oss-count i{font-style:normal;opacity:.4;margin:0 2px}
+.oss-arrow{appearance:none;background:none;border:0;color:rgba(235,233,227,.5);font-size:18px;line-height:1;padding:6px 8px;cursor:pointer;transition:color .2s,transform .2s}
+.oss-arrow:hover:not(:disabled){color:var(--chalk);transform:translateY(-1px)}
+.oss-arrow:disabled{opacity:.22;cursor:default}
