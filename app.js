@@ -271,45 +271,74 @@
   if (initial > 0) commit(initial);
   else commit(0);
 
-  // 06 / open-source slider: overflow-hidden feel, arrows, wheel-to-horizontal.
+  // 06 / open-source slider: transform-based pages, no native scrolling.
   const ossList = $('.oss-list');
   if (ossList) {
+    const ossTrack = $('.oss-track');
     const ossNav = $('.oss-nav');
     const ossCountNow = ossNav && ossNav.querySelector('.oss-count b');
     const ossCountTotal = ossNav && ossNav.querySelector('.oss-count span');
-    const ossStep = () => ossList.clientWidth;
-    const ossPages = () => Math.max(1, Math.round(ossList.scrollWidth / Math.max(1, ossList.clientWidth)));
-    function ossUpdate() {
-      const pages = ossPages();
-      if (ossNav) ossNav.classList.toggle('is-on', ossList.scrollWidth > ossList.clientWidth + 8);
-      if (ossCountTotal) ossCountTotal.textContent = String(pages).padStart(2, '0');
-      if (ossCountNow) ossCountNow.textContent = String(Math.min(pages, Math.round(ossList.scrollLeft / Math.max(1, ossList.clientWidth)) + 1)).padStart(2, '0');
-      const prev = ossNav && ossNav.querySelector('.oss-prev');
-      const next = ossNav && ossNav.querySelector('.oss-next');
-      if (prev) prev.disabled = ossList.scrollLeft < 8;
-      if (next) next.disabled = ossList.scrollLeft > ossList.scrollWidth - ossList.clientWidth - 8;
-    }
-    const ossGo = (dir) => {
-      ossList.scrollBy({left: dir * ossStep(), behavior: 'smooth'});
-      setTimeout(ossUpdate, 420);
+    const ossPrev = ossNav && ossNav.querySelector('.oss-prev');
+    const ossNext = ossNav && ossNav.querySelector('.oss-next');
+    let ossPage = 0;
+    const ossMobile = () => innerWidth <= 760;
+    const ossPages = () => {
+      const n = ossTrack ? ossTrack.children.length : 0;
+      const perPage = ossMobile() ? 2 : 4;
+      return Math.max(1, Math.ceil(n / perPage));
     };
-    if (ossNav) {
-      const prev = ossNav.querySelector('.oss-prev'), next = ossNav.querySelector('.oss-next');
-      if (prev) prev.addEventListener('click', () => ossGo(-1));
-      if (next) next.addEventListener('click', () => ossGo(1));
+    const ossStep = () => {
+      const first = ossTrack && ossTrack.children[0];
+      if (!first) return ossList.clientWidth;
+      const gap = parseFloat(getComputedStyle(ossTrack).columnGap) || 0;
+      return first.getBoundingClientRect().width + gap;
+    };
+    function ossRender(animate = true) {
+      const pages = ossPages();
+      ossPage = clamp(ossPage, 0, pages - 1);
+      if (ossTrack) {
+        ossTrack.style.transition = animate ? 'transform .6s cubic-bezier(.22,1,.36,1)' : 'none';
+        ossTrack.style.transform = 'translate3d(' + (-ossPage * ossStep()) + 'px,0,0)';
+      }
+      if (ossNav) ossNav.classList.toggle('is-on', pages > 1);
+      if (ossCountNow) ossCountNow.textContent = String(ossPage + 1).padStart(2, '0');
+      if (ossCountTotal) ossCountTotal.textContent = String(pages).padStart(2, '0');
+      if (ossPrev) ossPrev.disabled = ossPage === 0;
+      if (ossNext) ossNext.disabled = ossPage >= pages - 1;
     }
+    function ossGo(dir) {
+      const pages = ossPages();
+      const next = clamp(ossPage + dir, 0, pages - 1);
+      if (next === ossPage) return;
+      ossPage = next;
+      ossRender();
+    }
+    if (ossPrev) ossPrev.addEventListener('click', () => ossGo(-1));
+    if (ossNext) ossNext.addEventListener('click', () => ossGo(1));
+    // wheel / trackpad: slide instead of scrolling, and never let the scene jump
+    let ossWheelAt = 0;
     ossList.addEventListener('wheel', (event) => {
-      if (ossList.scrollWidth <= ossList.clientWidth + 8) return;
-      if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
       event.preventDefault();
-      ossList.scrollLeft += event.deltaY;
+      const now = performance.now();
+      if (now - ossWheelAt < 650) return;
+      if (Math.abs(event.deltaY) < 8 && Math.abs(event.deltaX) < 8) return;
+      ossWheelAt = now;
+      ossGo((event.deltaY || event.deltaX) > 0 ? 1 : -1);
     }, {passive:false});
-    ossList.addEventListener('scroll', ossUpdate, {passive:true});
-    addEventListener('resize', ossUpdate, {passive:true});
+    // touch swipe
+    let ossTouchX = null;
+    ossList.addEventListener('touchstart', (e) => { ossTouchX = e.touches[0].clientX; }, {passive:true});
+    ossList.addEventListener('touchend', (e) => {
+      if (ossTouchX === null) return;
+      const dx = e.changedTouches[0].clientX - ossTouchX;
+      ossTouchX = null;
+      if (Math.abs(dx) > 36) ossGo(dx < 0 ? 1 : -1);
+    }, {passive:true});
+    addEventListener('resize', () => { ossPage = Math.min(ossPage, ossPages() - 1); ossRender(false); }, {passive:true});
     new MutationObserver(() => {
-      if (document.body.dataset.scene === '5') { ossList.scrollLeft = 0; ossUpdate(); }
+      if (document.body.dataset.scene === '5') { ossPage = 0; ossRender(false); }
     }).observe(document.body, {attributes:true, attributeFilter:['data-scene']});
-    setTimeout(ossUpdate, 300);
+    setTimeout(() => ossRender(false), 300);
   }
 
   // Header: deterministic daily working-capacity figure (38-96).
