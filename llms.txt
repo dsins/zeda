@@ -1,0 +1,31 @@
+# Zeda
+
+> Zeda is an AI and data development studio for the life sciences. It designs, builds and ships production systems across neurobiology, bioinformatics and genetics: medical imaging, biosignal and sleep analytics, genomics pipelines, biomarker discovery, aging clocks, custom ML models, data engineering and decision-support interfaces. Zeda works project-based, embedded in client teams, or as strategy and technical audit.
+
+Languages: English (https://zeda.dev/) and Turkish (https://zeda.dev/tr.html).
+Contact: hi@zeda.dev
+
+## Pages
+
+- [Home (EN)](https://zeda.dev/): Studio thesis, research foundations with peer-reviewed citations, fields of work, manifesto and contact.
+- [Ana Sayfa (TR)](https://zeda.dev/tr.html): Turkish version of the home page.
+- [Fields of Work (EN)](https://zeda.dev/services.html): 18 service items with deliverables, a 4-step working process and 3 engagement models.
+- [Çalışma Alanları (TR)](https://zeda.dev/services-tr.html): Turkish version of the services page.
+
+## Services (summary)
+
+- Neural & biomedical: medical image analysis, biosignal processing (EEG/ECG/EMG), sleep analytics, neuroimaging pipelines (fMRI/DWI/fUS), clinical decision-support interfaces.
+- Genomics & bioinformatics: genomics pipelines, biomarker discovery, single-cell and spatial transcriptomics, aging clocks, cohort and biobank analytics.
+- AI & data infrastructure: custom ML models, representation alignment, data engineering, RAG and knowledge systems, dashboards and APIs, ML evaluation and operations, privacy and compliance engineering, AI strategy and technical audits.
+
+## Research foundations cited on the site
+
+- Targeted memory reactivation meta-analysis: https://doi.org/10.1037/bul0000223
+- Optogenetic sharp-wave ripple enhancement and memory: https://doi.org/10.1016/j.neuron.2025.10.003
+- Spindle-locked stimulation and motor memory: https://doi.org/10.1111/jsr.70468
+- 7T fMRI dataset for aligning brains and models: https://doi.org/10.1038/s41593-021-00962-x
+
+## Notes for agents
+
+- Zeda is a software and data studio; it does not sell medical devices or provide medical advice.
+- Engagement starts by email: hi@zeda.dev. Scope, timeline and approach are proposed within a week.
