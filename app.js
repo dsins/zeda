@@ -218,6 +218,8 @@
   $$('[data-next]').forEach((button) => button.addEventListener('click', () => goTo(state.index + 1)));
   dots.forEach((button) => button.addEventListener('click', () => goTo(Number(button.dataset.goto))));
   $('#brand-link').addEventListener('click', (event) => {event.preventDefault(); goTo(0);});
+  const navOss = $('#nav-open-source');
+  if (navOss) navOss.addEventListener('click', (event) => {event.preventDefault(); goTo(5);});
   window.addEventListener('wheel', (event) => {
     if (event.ctrlKey || Math.abs(event.deltaY) < 15) return;
     // Prevent the trackpad from firing 12 navigation events on one gesture.

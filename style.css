@@ -542,3 +542,6 @@ body.final-unlocked .final-dust{opacity:1}
 }
 
 .oss-watermark{position:absolute;z-index:2;right:-.04em;top:52%;transform:translateY(-50%);pointer-events:none;font:800 min(17vw,300px)/.92 var(--sans);letter-spacing:-.12em;color:rgba(223,222,217,.032);filter:blur(1px);text-align:right}
+
+.oss-aside-link{margin-left:18px;color:rgba(235,233,227,.32);border-bottom:1px solid rgba(235,233,227,.14);transition:color .25s,border-color .25s}
+.oss-aside-link:hover{color:rgba(235,233,227,.7);border-color:rgba(235,233,227,.4)}
